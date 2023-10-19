@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 				mkdirSync(routesPath, { recursive: true });
 			}
 
-			const routeFilePath = path.join(routesPath, `${routeName}.ts`);
+			const routeFilePath = path.join(routesPath, `${routeName}.procedures.ts`);
 			const serviceFilePath = path.join(routesPath, `${routeName}.service.ts`);
 			const inputsFilePath = path.join(routesPath, `${routeName}.inputs.ts`);
 
@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (existsSync(rootFilePath)) {
 				let content = readFileSync(rootFilePath, 'utf8');
 
-				const importStatement = `import { ${routeName}Router } from '~/server/api/routers/${routeName}/${routeName}';`;
+				const importStatement = `import { ${routeName}Router } from '~/server/api/routers/${routeName}/${routeName}.procedures';`;
 				const routerMapping = `${routeName}: ${routeName}Router`;
 
 				// Add the import at the top
@@ -88,13 +88,13 @@ async function formatFileWithPrettier(filePath: string) {
 }
 
 const routeTemplate = (routeName: string) => `
-import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc';
+import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc';
 import * as ${routeName}Inputs from './${routeName}.inputs';
 import * as ${routeName}Service from './${routeName}.service';
 
 export const ${routeName}Router = createTRPCRouter({
-    hello: publicProcedure.input(${routeName}Inputs.helloInput).query(({ input }) => {
-        return ${routeName}Service.greetUser(input.text);
+    getById: protectedProcedure.input(${routeName}Inputs.getByIdInput).query(({ input, ctx }) => {
+        return ${routeName}Service.getById(input, ctx);
     }),
 });
 `;
@@ -102,13 +102,17 @@ export const ${routeName}Router = createTRPCRouter({
 const inputsTemplate = `
 import { z } from 'zod';
 
-export const helloInput = z.object({
-    text: z.string(),
+export const getByIdInput = z.object({
+    id: z.string(),
 });
+export type GetByIdInput = z.infer<typeof getByIdInput>;
 `;
 
 const serviceTemplate = (routeName: string) => `
-export const greetUser = (userName: string) => {
-    return \`Hello \${userName}\`;
+import { type ProtectedTRPCContext } from '../../trpc';
+import { type GetByIdInput } from './${routeName}.inputs';
+
+export const getById = (input: GetByIdInput, _ctx: ProtectedTRPCContext) => {
+	return input;
 };
 `;
