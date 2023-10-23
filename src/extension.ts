@@ -2,6 +2,9 @@ import path = require('path');
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { format } from 'prettier';
 import * as vscode from 'vscode';
+import { procedureTemplate } from './api/procedureTemplate';
+import { inputTemplate } from './api/inputTemplate';
+import { serviceTemplate } from './api/serviceTemplate';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "next-app-tools" is now active!');
@@ -28,9 +31,9 @@ export function activate(context: vscode.ExtensionContext) {
 			const serviceFilePath = path.join(routesPath, `${routeName}.service.ts`);
 			const inputsFilePath = path.join(routesPath, `${routeName}.inputs.ts`);
 
-			writeFileSync(routeFilePath, routeTemplate(routeName).trim(), 'utf-8');
+			writeFileSync(routeFilePath, procedureTemplate(routeName).trim(), 'utf-8');
 			writeFileSync(serviceFilePath, serviceTemplate(routeName).trim(), 'utf-8');
-			writeFileSync(inputsFilePath, inputsTemplate.trim(), 'utf-8');
+			writeFileSync(inputsFilePath, inputTemplate.trim(), 'utf-8');
 
 			formatFileWithPrettier(routeFilePath);
 			formatFileWithPrettier(serviceFilePath);
@@ -86,33 +89,3 @@ async function formatFileWithPrettier(filePath: string) {
 	const formatted = await format(content, { parser: 'typescript', tabWidth: 4, singleQuote: true });
 	writeFileSync(filePath, formatted, 'utf8');
 }
-
-const routeTemplate = (routeName: string) => `
-import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc';
-import * as ${routeName}Inputs from './${routeName}.inputs';
-import * as ${routeName}Service from './${routeName}.service';
-
-export const ${routeName}Router = createTRPCRouter({
-    getById: protectedProcedure.input(${routeName}Inputs.getByIdInput).query(({ input, ctx }) => {
-        return ${routeName}Service.getById(input, ctx);
-    }),
-});
-`;
-
-const inputsTemplate = `
-import { z } from 'zod';
-
-export const getByIdInput = z.object({
-    id: z.string(),
-});
-export type GetByIdInput = z.infer<typeof getByIdInput>;
-`;
-
-const serviceTemplate = (routeName: string) => `
-import { type ProtectedTRPCContext } from '../../trpc';
-import { type GetByIdInput } from './${routeName}.inputs';
-
-export const getById = (input: GetByIdInput, _ctx: ProtectedTRPCContext) => {
-	return input;
-};
-`;

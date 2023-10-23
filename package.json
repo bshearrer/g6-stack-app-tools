@@ -15,7 +15,7 @@
 		"commands": [
 			{
 				"command": "extension.createTRPCRoute",
-				"title": "Create New TRPC Route"
+				"title": "G6 Stack - New TRPC Route"
 			},
 			{
 				"command": "extension.createNextPage",
