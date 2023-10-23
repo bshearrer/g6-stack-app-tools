@@ -7,3 +7,7 @@ export async function formatFileWithPrettier(filePath: string) {
 	const formatted = await format(content, { parser: 'typescript', tabWidth: 4, singleQuote: true });
 	writeFileSync(filePath, formatted, 'utf8');
 }
+
+export function capitalizeFirstLetter(string: string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+}
