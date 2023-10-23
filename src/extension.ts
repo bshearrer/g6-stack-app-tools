@@ -1,10 +1,10 @@
 import path = require('path');
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
-import { format } from 'prettier';
 import * as vscode from 'vscode';
-import { procedureTemplate } from './api/procedureTemplate';
 import { inputTemplate } from './api/inputTemplate';
+import { procedureTemplate } from './api/procedureTemplate';
 import { serviceTemplate } from './api/serviceTemplate';
+import { formatFileWithPrettier } from './util/format';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "next-app-tools" is now active!');
@@ -83,9 +83,3 @@ export function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export function deactivate() {}
-
-async function formatFileWithPrettier(filePath: string) {
-	const content = readFileSync(filePath, 'utf8');
-	const formatted = await format(content, { parser: 'typescript', tabWidth: 4, singleQuote: true });
-	writeFileSync(filePath, formatted, 'utf8');
-}
