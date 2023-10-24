@@ -7,6 +7,7 @@
 		"type": "git",
 		"url": "https://github.com/bshearrer/g6-stack-app-tools"
 	},
+	"publisher": "bshearrer",
 	"engines": {
 		"vscode": "^1.83.0"
 	},
