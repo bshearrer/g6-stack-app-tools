@@ -2,7 +2,7 @@
 	"name": "g6-stack-app-tools",
 	"displayName": "G6 Stack App Tools",
 	"description": "A set of tools to create new screens, components, and routes for your g6 stack app",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/bshearrer/g6-stack-app-tools"
@@ -45,7 +45,7 @@
 		"test": "node ./out/test/runTest.js",
 		"release:patch": "npm version patch && git push && git push --tags && npm run publish",
 		"release:minor": "npm version minor && git push && git push --tags && npm run publish",
-		"release:major": "npm version major && git push && git push --tags && npm run publish"	
+		"release:major": "npm version major && git push && git push --tags && npm run publish"
 	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.2",
