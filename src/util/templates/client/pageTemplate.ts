@@ -1,14 +1,11 @@
-import { capitalizeFirstLetter } from '../../format';
-
 export const getPageTemplate = (pageName: string) => {
-	const capitalizedPageName = capitalizeFirstLetter(pageName);
 	return `
-import { ${capitalizedPageName}Screen } from '~/features/screens/${capitalizedPageName}';
+import { ${getPageTemplate}Screen } from '~/features/screens/${getPageTemplate}';
 
-export const ${capitalizedPageName} = () => {
-    return <${capitalizedPageName}Screen />;
+export const ${getPageTemplate} = () => {
+    return <${getPageTemplate}Screen />;
 }
 
-export default ${capitalizedPageName};
+export default ${getPageTemplate};
 `.trim();
 };
