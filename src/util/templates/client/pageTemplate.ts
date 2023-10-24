@@ -1,17 +1,14 @@
 import { capitalizeFirstLetter } from '../../format';
 
 export const pageTemplate = (pageName: string) => {
+	const capitalizedPageName = capitalizeFirstLetter(pageName);
 	return `
-import React from 'react';
+import { ${capitalizedPageName}Screen } from '~/features/screens/${capitalizedPageName}';
 
-const ${capitalizeFirstLetter(pageName)}: React.FC = () => {
-    return (
-        <div>
-            Welcome to the ${pageName} page!
-        </div>
-    );
+export const ${capitalizedPageName} = () => {
+    return <${capitalizedPageName}Screen />;
 }
 
-export default ${capitalizeFirstLetter(pageName)};
+export default ${capitalizedPageName};
 `.trim();
 };
