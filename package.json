@@ -2,7 +2,7 @@
 	"name": "g6-stack-app-tools",
 	"displayName": "G6 Stack App Tools",
 	"description": "A set of tools to create new screens, components, and routes for your g6 stack app",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/bshearrer/g6-stack-app-tools"
@@ -32,6 +32,7 @@
 			}
 		]
 	},
+	"icon": "images/icon.png",
 	"scripts": {
 		"vscode:prepublish": "yarn run package",
 		"compile": "webpack",
