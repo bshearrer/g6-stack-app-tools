@@ -18,42 +18,59 @@ export function createNextPage() {
 		let currentDir = pagesPath;
 		let dirSelection = null;
 
-		// Navigate through directories until the user selects where to create the file or cancels the operation.
 		do {
 			const dirs = readdirSync(currentDir, { withFileTypes: true })
 				.filter((dirent) => dirent.isDirectory())
 				.map((dirent) => '/' + dirent.name);
 
 			const options =
-				currentDir === pagesPath ? ['Create File Here', ...dirs] : ['Create File Here', ...dirs, '<- Back'];
+				currentDir === pagesPath
+					? ['Create File Here', 'Create New Directory', ...dirs]
+					: ['Create File Here', 'Create New Directory', ...dirs, '<- Back'];
 
 			dirSelection = await vscode.window.showQuickPick(options, { placeHolder: 'Select an option or directory' });
 
 			if (!dirSelection) {
-				// User canceled the operation
-				return;
+				return; // User canceled
 			}
 
-			if (dirSelection === 'Back') {
-				// Go up one directory
+			if (dirSelection === '<- Back') {
 				currentDir = path.dirname(currentDir);
+			} else if (dirSelection === 'Create New Directory') {
+				const newDirName = await vscode.window.showInputBox({ prompt: 'Enter directory name:' });
+				if (!newDirName) {
+					return; // User canceled
+				}
+				const newDirPath = path.join(currentDir, newDirName);
+				if (!existsSync(newDirPath)) {
+					mkdirSync(newDirPath);
+				}
+				currentDir = newDirPath;
 			} else if (dirSelection !== 'Create File Here') {
-				// Dive into selected directory
 				currentDir = path.join(currentDir, dirSelection);
 			}
 		} while (dirSelection !== 'Create File Here');
 
-		const pageName = await vscode.window.showInputBox({ prompt: 'Enter page name:' });
+		let pageName = await vscode.window.showInputBox({ prompt: 'Enter page name:' });
 		if (!pageName) {
 			vscode.window.showErrorMessage('Page name is required!');
 			return;
 		}
 
-		let formattedPageName = pageName.replace(/\.tsx|\.ts|\.jsx|\.js/g, '');
-		formattedPageName = capitalizeFirstLetter(formattedPageName);
+		let featureName: string | undefined = pageName;
+		if (pageName.toLowerCase() === 'index') {
+			featureName = await vscode.window.showInputBox({ prompt: 'Enter feature name for index page:' });
+			if (!featureName) {
+				vscode.window.showErrorMessage('Feature name is required for index page!');
+				return;
+			}
+		}
+
+		const formattedPageName = lowerCaseFirstLetter(pageName.replace(/\.tsx|\.ts|\.jsx|\.js/g, ''));
+		const formattedFeatureName = capitalizeFirstLetter(featureName.replace(/\.tsx|\.ts|\.jsx|\.js/g, ''));
 
 		const normalizedPath = path.join(currentDir.replace(pagesPath, ''), formattedPageName);
-		const fullPagePath = path.join(pagesPath, `${lowerCaseFirstLetter(normalizedPath)}.tsx`);
+		const fullPagePath = path.join(pagesPath, `${normalizedPath}.tsx`);
 		const pageDirectory = path.dirname(fullPagePath);
 
 		if (!existsSync(pageDirectory)) {
@@ -65,20 +82,18 @@ export function createNextPage() {
 			return;
 		}
 
-		writeFileSync(fullPagePath, getPageTemplate(formattedPageName), 'utf-8');
+		writeFileSync(fullPagePath, getPageTemplate(formattedFeatureName), 'utf-8');
 		formatFileWithPrettier(fullPagePath);
-		vscode.window.showInformationMessage(
-			`Page "${lowerCaseFirstLetter(normalizedPath)}.tsx" created successfully!`,
-		);
+		vscode.window.showInformationMessage(`Page "${normalizedPath}.tsx" created successfully!`);
 
-		const featureFilePath = path.join(workspacePath, `/src/features/screens/${formattedPageName}/index.tsx`);
+		const featureFilePath = path.join(workspacePath, `/src/features/screens/${formattedFeatureName}/index.tsx`);
 		const featureDirectory = path.dirname(featureFilePath);
 
 		if (!existsSync(featureDirectory)) {
 			mkdirSync(featureDirectory, { recursive: true });
 		}
 
-		writeFileSync(featureFilePath, getFeatureTemplate(capitalizeFirstLetter(formattedPageName)), 'utf-8');
+		writeFileSync(featureFilePath, getFeatureTemplate(formattedFeatureName), 'utf-8');
 		formatFileWithPrettier(featureFilePath);
 
 		const componentPath = path.join(featureDirectory, 'components');
@@ -92,6 +107,6 @@ export function createNextPage() {
 			}
 		});
 
-		vscode.window.showInformationMessage(`Feature "${formattedPageName}/index.tsx" created successfully!`);
+		vscode.window.showInformationMessage(`Feature "${formattedFeatureName}/index.tsx" created successfully!`);
 	});
 }
