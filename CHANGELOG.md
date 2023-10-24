@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.0.2] - 2023-10-24
+
+### Added
+- Updated Readme
+
 ## [1.0.1] - 2023-10-24
 
 ### Fixed
