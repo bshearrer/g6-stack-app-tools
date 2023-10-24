@@ -3,6 +3,10 @@
 	"displayName": "G6 Stack App Tools",
 	"description": "A set of tools to create new screens, components, and routes for your g6 stack app",
 	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/bshearrer/g6-stack-app-tools"
+	},
 	"engines": {
 		"vscode": "^1.83.0"
 	},
