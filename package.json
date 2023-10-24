@@ -42,7 +42,8 @@
 		"watch-tests": "tsc -p . -w --outDir out",
 		"pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
 		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
+		"test": "node ./out/test/runTest.js",
+		"publish": "npm run vscode:prepublish && vsce package && vsce publish"
 	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.2",
