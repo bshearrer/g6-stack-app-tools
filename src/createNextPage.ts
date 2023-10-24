@@ -2,7 +2,8 @@ import path = require('path');
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import * as vscode from 'vscode';
 import { formatFileWithPrettier } from './util/format';
-import { pageTemplate } from './util/templates/client/pageTemplate';
+import { getFeatureTemplate } from './util/templates/client/getFeatureTemplate';
+import { getPageTemplate } from './util/templates/client/pageTemplate';
 
 export function createNextPage() {
 	return vscode.commands.registerCommand('extension.createNextPage', () => {
@@ -46,14 +47,30 @@ export function createNextPage() {
 			// Extract the page name from the path to use in the template
 			const pageName = path.basename(normalizedPath);
 
-			// Write the file
-			writeFileSync(fullPagePath, pageTemplate(pageName), 'utf-8');
+			// Write the main page file
+			writeFileSync(fullPagePath, getPageTemplate(pageName), 'utf-8');
 
-			// Format the file
+			// Format the main page file
 			formatFileWithPrettier(fullPagePath);
 
-			// Show success message
+			// Construct path for the new feature file
+			const featureFilePath = path.join(workspacePath, `/src/features/screens/${pageName}/index.tsx`);
+			const featureDirectory = path.dirname(featureFilePath);
+
+			// Create feature directory if it doesn't exist
+			if (!existsSync(featureDirectory)) {
+				mkdirSync(featureDirectory, { recursive: true });
+			}
+
+			// Write the feature file
+			writeFileSync(featureFilePath, getFeatureTemplate(pageName), 'utf-8');
+
+			// Format the feature file
+			formatFileWithPrettier(featureFilePath);
+
+			// Show success messages
 			vscode.window.showInformationMessage(`Page "${normalizedPath}.tsx" created successfully!`);
+			vscode.window.showInformationMessage(`Feature "${pageName}/index.tsx" created successfully!`);
 		});
 	});
 }
