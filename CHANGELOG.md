@@ -1,9 +1,13 @@
-# Change Log
-
-All notable changes to the "next-app-tools" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+# Changelog
 
 ## [Unreleased]
 
-- Initial release
+## [1.0.1] - 2023-10-24
+
+### Fixed
+- Bugfix for issue with creating new next page.
+
+## [1.0.0] - 2023-10-23
+
+### Added
+- Initial release with features: Create New tRPC Route, Create Next Page, Create UI Component
