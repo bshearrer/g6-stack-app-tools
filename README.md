@@ -1,71 +1,52 @@
-# next-app-tools README
+# G6 Stack App Tools
 
-This is the README for your extension "next-app-tools". After writing up a brief description, we recommend including the following sections.
+## Description
+G6 Stack App Tools is a Visual Studio Code extension designed to offer a suite of utilities to aid in creating new screens, components, and routes for your g6 stack app. This extension aims to streamline the development workflow and make the addition of new UI components, tRPC routes, and Next.js pages a breeze.
 
 ## Features
+1. G6 Stack - Create tRPC Route: This command facilitates the creation of a new tRPC route, including the necessary service and procedure files. It also helps you integrate the route into your app's main root.ts file.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+2. G6 Stack - Create Next Page: An efficient way to scaffold a new Next.js page.
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+3. G6 Stack - Create UI Component: Quickly design a new UI component. Choose from existing folders or create a new one, and the command will handle the folder creation and template addition for you.
 
 ## Requirements
+- VS Code version 1.83.0 or later.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
-## Extension Settings
+## Installation
+You can install this extension directly from the Visual Studio Code Marketplace. Search for "G6 Stack App Tools" and click on "Install".
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Usage
+1. Open your g6 stack app in VS Code.
+2. Use the command palette (Ctrl+Shift+P or Cmd+Shift+P on macOS) and type in the desired command (G6 Stack - Create tRPC Route, G6 Stack - Create Next Page, or G6 Stack - Create UI Component).
+3. Follow the prompts in VS Code to define names and other details.
+4. The necessary files will be generated and integrated accordingly.
 
-For example:
+## Development
+If you wish to contribute or modify the extension for personal use, here are the main development scripts:
 
-This extension contributes the following settings:
+- Compile: yarn run compile
+- Watch: yarn run watch
+- Package: yarn run package
+- Lint: yarn run lint
+- Test: yarn run test
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+Remember to always ensure that your changes adhere to linting rules and pass the test suite.
 
-## Known Issues
+## Dependencies
+This extension uses various packages, such as:
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- prettier for code formatting
+- webpack for bundling the source files
+- typescript for type checking and transpiling
+- eslint for linting the codebase
 
-## Release Notes
+## Feedback and Contribution
+Feedback and contributions are always welcome. Please open an issue on the GitHub repository if you encounter any problems or have suggestions for improvements.
 
-Users appreciate release notes as you update your extension.
+## License
+Please refer to the license file included in the repository.
+***
+### Enjoy coding with the G6 Stack App Tools extension! 🚀
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
