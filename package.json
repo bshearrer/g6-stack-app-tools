@@ -15,11 +15,15 @@
 		"commands": [
 			{
 				"command": "extension.createTRPCRoute",
-				"title": "G6 Stack - New TRPC Route"
+				"title": "G6 Stack - Create tRPC Route"
 			},
 			{
 				"command": "extension.createNextPage",
-				"title": "G6 Stack - New Next Page"
+				"title": "G6 Stack - Create Next Page"
+			},
+			{
+				"command": "extension.createUIComponent",
+				"title": "G6 Stack - Create UI Component"
 			}
 		]
 	},
