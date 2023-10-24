@@ -4,8 +4,6 @@ import { createTRPCRoute } from './createTRPCRoute';
 import { createNextPage } from './createNextPage';
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('Congratulations, your extension "next-app-tools" is now active!');
-
 	const trpcRouteDisposable = createTRPCRoute();
 	context.subscriptions.push(trpcRouteDisposable);
 
