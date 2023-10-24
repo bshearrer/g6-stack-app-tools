@@ -15,3 +15,11 @@ export function capitalizeFirstLetter(string: string) {
 export function lowerCaseFirstLetter(string: string) {
 	return string.charAt(0).toLowerCase() + string.slice(1);
 }
+
+//function that converts spaces in strings or dashes in strings to pascal case
+export function toPascalCase(string: string) {
+	return string
+		.split(/ |-/)
+		.map((word, index) => (index === 0 ? word : capitalizeFirstLetter(word)))
+		.join('');
+}

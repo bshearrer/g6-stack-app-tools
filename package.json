@@ -43,7 +43,9 @@
 		"pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js",
-		"publish": "npm run vscode:prepublish && vsce package && vsce publish"
+		"release:patch": "npm version patch && git push && git push --tags && npm run publish",
+		"release:minor": "npm version minor && git push && git push --tags && npm run publish",
+		"release:major": "npm version major && git push && git push --tags && npm run publish"	
 	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.2",

@@ -4,7 +4,7 @@ import * as ${routeName}Inputs from './${routeName}.inputs';
 import * as ${routeName}Service from './${routeName}.service';
 
 export const ${routeName}Router = createTRPCRouter({
-    getById: protectedProcedure.input(${routeName}Inputs.getByIdInput).query(({ input, ctx }) => {
+    getById: protectedProcedure.input(${routeName}Inputs.getByIdInputSchema).query(({ input, ctx }) => {
         return ${routeName}Service.getById(input, ctx);
     }),
 });

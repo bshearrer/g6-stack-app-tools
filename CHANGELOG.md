@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.0.3] - 2023-10-24
+### Fixed
+- Create tRPC Route correctly handles bad user input with `-` or ` ` in the name.
+
 ## [1.0.2] - 2023-10-24
 
 ### Added

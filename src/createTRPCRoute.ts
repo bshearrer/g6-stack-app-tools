@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import * as vscode from 'vscode';
-import { formatFileWithPrettier } from './util/format';
+import { formatFileWithPrettier, toPascalCase } from './util/format';
 import { getProcedureTemplate } from './util/templates/api/getProcedureTemplate';
 import { getServiceTemplate } from './util/templates/api/getServiceTemplate';
 import { inputTemplate } from './util/templates/api/inputTemplate';
@@ -9,7 +9,12 @@ import path = require('path');
 export function createTRPCRoute() {
 	return vscode.commands.registerCommand('extension.createTRPCRoute', () => {
 		getRouteName()
-			.then((routeName) => createRouteFiles(routeName))
+			.then((routeName) => {
+				if (routeName.includes('-') || routeName.includes(' ')) {
+					routeName = toPascalCase(routeName);
+				}
+				return createRouteFiles(routeName);
+			})
 			.then((routeName) => updateRootFile(routeName))
 			.catch(showError);
 	});
@@ -20,10 +25,18 @@ function showError(message: string) {
 }
 
 async function getRouteName(): Promise<string> {
-	const routeName = await vscode.window.showInputBox({ prompt: 'Enter route name:' });
-	if (!routeName) {
+	const routeNameInput = await vscode.window.showInputBox({
+		prompt: 'Enter route name (ex: user, appointments, etc.): ',
+	});
+	if (!routeNameInput) {
 		throw new Error('Route name is required!');
 	}
+	// Remove "Router" or "router" suffix if it exists
+	let routeName = routeNameInput;
+	if (routeNameInput.toLowerCase().endsWith('router')) {
+		routeName = routeNameInput.slice(0, -6);
+	}
+
 	return routeName;
 }
 

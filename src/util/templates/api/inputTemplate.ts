@@ -1,8 +1,8 @@
 export const inputTemplate = `
 import { z } from 'zod';
 
-export const getByIdInput = z.object({
+export const getByIdInputSchema = z.object({
     id: z.string(),
 });
-export type GetByIdInput = z.infer<typeof getByIdInput>;
+export type GetByIdInput = z.infer<typeof getByIdInputSchema>;
 `;
