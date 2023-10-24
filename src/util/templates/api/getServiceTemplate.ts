@@ -1,4 +1,4 @@
-export const serviceTemplate = (routeName: string) => `
+export const getServiceTemplate = (routeName: string) => `
 import { type ProtectedTRPCContext } from '../../trpc';
 import { type GetByIdInput } from './${routeName}.inputs';
 

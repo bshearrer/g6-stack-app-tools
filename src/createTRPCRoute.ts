@@ -2,9 +2,9 @@ import path = require('path');
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import * as vscode from 'vscode';
 import { inputTemplate } from './util/templates/api/inputTemplate';
-import { procedureTemplate } from './util/templates/api/procedureTemplate';
-import { serviceTemplate } from './util/templates/api/serviceTemplate';
 import { formatFileWithPrettier } from './util/format';
+import { getProcedureTemplate } from './util/templates/api/getProcedureTemplate';
+import { getServiceTemplate } from './util/templates/api/getServiceTemplate';
 
 export function createTRPCRoute() {
 	return vscode.commands.registerCommand('extension.createTRPCRoute', () => {
@@ -31,8 +31,8 @@ export function createTRPCRoute() {
 			const serviceFilePath = path.join(routesPath, `${routeName}.service.ts`);
 			const inputsFilePath = path.join(routesPath, `${routeName}.inputs.ts`);
 
-			writeFileSync(routeFilePath, procedureTemplate(routeName).trim(), 'utf-8');
-			writeFileSync(serviceFilePath, serviceTemplate(routeName).trim(), 'utf-8');
+			writeFileSync(routeFilePath, getProcedureTemplate(routeName).trim(), 'utf-8');
+			writeFileSync(serviceFilePath, getServiceTemplate(routeName).trim(), 'utf-8');
 			writeFileSync(inputsFilePath, inputTemplate.trim(), 'utf-8');
 
 			formatFileWithPrettier(routeFilePath);
