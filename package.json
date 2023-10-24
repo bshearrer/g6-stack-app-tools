@@ -1,8 +1,8 @@
 {
-	"name": "next-app-tools",
-	"displayName": "Next App Tools",
-	"description": "A set of tools to create new screens, components, and routes for your next app",
-	"version": "0.0.1",
+	"name": "g6-stack-app-tools",
+	"displayName": "G6 Stack App Tools",
+	"description": "A set of tools to create new screens, components, and routes for your g6 stack app",
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.83.0"
 	},
