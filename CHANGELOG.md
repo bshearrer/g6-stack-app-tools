@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.0.4] - 2023-10-25
+### Fixed
+- Fixed bug causing create next page to fail on every use
+
 ## [1.0.3] - 2023-10-24
 ### Fixed
 - Create tRPC Route correctly handles bad user input with `-` or ` ` in the name.

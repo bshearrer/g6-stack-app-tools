@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'fs';
 import * as vscode from 'vscode';
 import { capitalizeFirstLetter, formatFileWithPrettier, lowerCaseFirstLetter } from './util/format';
 import { getFeatureTemplate } from './util/templates/client/getFeatureTemplate';
-import { getPageTemplate } from './util/templates/client/pageTemplate';
+import { getPageTemplate } from './util/templates/client/getPageTemplate';
 import path = require('path');
 
 export function createNextPage() {
@@ -61,7 +61,7 @@ export function createNextPage() {
 		const featureFilePath = path.join(workspacePath, `/src/features/screens/${formattedFeatureName}/index.tsx`);
 		const featureDirectory = path.dirname(featureFilePath);
 
-		createDirectories([featureDirectory, featureFilePath]);
+		createDirectories([featureDirectory]);
 
 		writeFileSync(featureFilePath, getFeatureTemplate(formattedFeatureName), 'utf-8');
 		formatFileWithPrettier(featureFilePath);
